@@ -1,2 +1,3 @@
-# markdown-it-admonition
- GitHub Markdown Admonition Syntax Plugin for Markdown It
+# Markdown It Github Alert
+
+GitHub Markdown Alert Syntax Plugin for Markdown It.

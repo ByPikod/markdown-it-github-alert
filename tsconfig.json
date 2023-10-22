@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES6",
+        "lib": ["ES6", "DOM"],
+        "allowJs": true,
+        "outDir": "./dist",
+        "rootDir": ".",
+        "moduleResolution": "node",
+        "strict": true,
+        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true
+    },
+    "include": [
+        "./src/*.ts",
+        "jest.config.ts"
+    ]
+}
+  
