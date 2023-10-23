@@ -40,7 +40,7 @@ export function alertTypeToClassName (alertType: AlertType): string {
  * @param className Class name
  * @returns The alert type for the class name
  */
-export function classNameToAlertType (className: string): AlertType {
+export function classNameToAlertType (className: string): AlertType | null {
   switch (className) {
     case 'note':
       return AlertType.NOTE
@@ -49,7 +49,7 @@ export function classNameToAlertType (className: string): AlertType {
     case 'warning':
       return AlertType.WARNING
     default:
-      return AlertType.NOTE
+      return null
   }
 }
 
