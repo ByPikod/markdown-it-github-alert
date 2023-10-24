@@ -26,7 +26,8 @@ export function alertPlugin (md: MarkdownIt): void {
   // instance is used to parse Markdown to Tokens
   // https://markdown-it.github.io/markdown-it/#Ruler.push
   md.core.ruler.before('fence', 'alert', (state: StateCore) => {
-    return true
+    const max = state.posMax
+    const start = state.pos
   }, {
     alt: [
       'paragraph',
