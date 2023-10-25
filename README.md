@@ -4,6 +4,15 @@ This is a plugin for [Markdown It](https://github.com/markdown-it/markdown-it) J
 
 I want to admit it was really hard to get this working.  Since there is no documentation for plugin development, I had to read the source code of markdown-it and a couple of plugins to understand how to make it work. I hope this plugin will help you to save time.
 
+> [!NOTE]
+> GitHub Note Alert Example
+
+> [!IMPORTANT]
+> GitHub Important Alert Example
+
+> [!WARNING]
+> GitHub Warning Alert Example
+
 ## Installation
 
 With NPM:
