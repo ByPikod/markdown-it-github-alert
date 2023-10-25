@@ -3,7 +3,6 @@
         "module": "CommonJS",
         "target": "ES6",
         "lib": ["ES6", "DOM"],
-        "allowJs": true,
         "outDir": "./dist",
         "rootDir": ".",
         "moduleResolution": "node",
@@ -14,8 +13,10 @@
         "esModuleInterop": true
     },
     "include": [
-        "./test/*.ts",
-        "./src/*.ts",
+        "src/**/*.ts",
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
     ]
 }
-  

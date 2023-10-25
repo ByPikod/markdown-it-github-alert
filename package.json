@@ -4,7 +4,10 @@
   "description": "GitHub Markdown Alert Syntax Plugin for Markdown It",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "lint": "eslint -c .eslintrc.json --ext",
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",
