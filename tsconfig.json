@@ -4,13 +4,16 @@
         "target": "ES6",
         "lib": ["ES6", "DOM"],
         "outDir": "./dist",
-        "rootDir": ".",
+        "rootDir": "src",
         "moduleResolution": "node",
         "strict": true,
         "noImplicitAny": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "declaration": true,
+        "declarationMap": true,
+        "declarationDir": "./dist/types"
     },
     "include": [
         "src/**/*.ts",
