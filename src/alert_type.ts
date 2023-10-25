@@ -36,24 +36,6 @@ export function alertTypeToClassName (alertType: AlertType): string {
 }
 
 /**
- * Returns the alert type for the class name.
- * @param className Class name
- * @returns The alert type for the class name
- */
-export function classNameToAlertType (className: string): AlertType | null {
-  switch (className) {
-    case 'note':
-      return AlertType.NOTE
-    case 'important':
-      return AlertType.IMPORTANT
-    case 'warning':
-      return AlertType.WARNING
-    default:
-      return null
-  }
-}
-
-/**
 * Returns the SVG icon path for the alert type.
 * @param alertType AlertType enum
 * @returns The SVG icon path for the alert type
