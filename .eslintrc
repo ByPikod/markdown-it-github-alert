@@ -9,7 +9,5 @@
         "sourceType": "module",
         "project": "./tsconfig.json",
         "extraFileExtensions": [".json"]
-    },
-    "rules": {
     }
 }

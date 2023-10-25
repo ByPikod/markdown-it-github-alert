@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "lint": "eslint -c .eslintrc.json --ext",
+    "lint": "eslint",
     "prepack": "npm run build"
   },
   "repository": {
