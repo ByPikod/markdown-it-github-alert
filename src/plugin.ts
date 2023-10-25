@@ -3,7 +3,16 @@ import type Renderer from 'markdown-it/lib/renderer'
 import type Token from 'markdown-it/lib/token'
 import { matchAlertType } from './parser'
 import { renderClosing, renderOpening } from './renderer'
+import type StateBlock from 'markdown-it/lib/rules_block/state_block'
 
+/**
+ * Renders the token opening to HTML.
+ * @param token Tokens
+ * @param idx Token index
+ * @param options MarkdownIt options
+ * @param env Environment
+ * @param self Renderer
+ */
 export function renderBlockquoteOpen (
   tokens: Token[],
   idx: number,
@@ -12,22 +21,21 @@ export function renderBlockquoteOpen (
   self: Renderer
 ): string {
   // Check if the token is an alert token
-  const alertType = matchAlertType(tokens[idx + 2])
-  if (alertType === null) return '<blockquote>'
+  const token = tokens[idx]
+  if (token.meta !== null && token.meta.alertType !== null) return renderOpening(token.meta.alertType)
 
-  // Before we render the opening tag, we need to remove [!INFO] from the content.
-  const token = tokens[idx + 2]
-  token.content = token.content.split('\n').slice(1).join('\n')
-
-  // Let's have a identifier special to alert for the closing tag.
-  tokens[idx].meta = {
-    isAlert: true
-  }
-
-  // Render the opening tag if it is an alert token
-  return renderOpening(alertType)
+  // Return the default closing tag if it is not an alert token
+  return '<blockquote>'
 }
 
+/**
+ * Renders the token closing to HTML.
+ * @param token Tokens
+ * @param idx Token index
+ * @param options MarkdownIt options
+ * @param env Environment
+ * @param self Renderer
+ */
 export function renderBlockquoteClose (
   tokens: Token[],
   idx: number,
@@ -35,19 +43,8 @@ export function renderBlockquoteClose (
   env: any,
   self: Renderer
 ): string {
-  /* We will check if opening was an alert token. */
-  // First we gotta find where opening tag is.
-  let i = idx - 1
-  for (;; i--) {
-    const token = tokens[i]
-    if (token === null) throw new Error('Opening tag not found for blockquote!')
-    if (token.type === 'blockquote_open') break
-  }
-
-  console.log(tokens)
-
-  // Then we should check if it is an alert token with the identifier we put in the opening tag.
-  const token = tokens[i]
+  // Check if the token is an alert token
+  const token = tokens[idx]
   if (token.meta !== null && token.meta.isAlert !== null) return renderClosing()
 
   // Return the default closing tag if it is not an alert token
@@ -60,6 +57,66 @@ export function renderBlockquoteClose (
  * @param md MarkdownIt instance
  */
 export function alertPlugin (md: MarkdownIt): void {
+  // Add the custom renderers
   md.renderer.rules.blockquote_open = renderBlockquoteOpen
   md.renderer.rules.blockquote_close = renderBlockquoteClose
+
+  // Find actual blockquote function
+  const actualBlockquote = md.block.ruler
+    .getRules('')
+    .find((val) => val.name === 'blockquote')
+  if (actualBlockquote === undefined) throw new Error('Blockquote rule not found!')
+
+  // Change it with the custom one
+  md.block.ruler.at(
+    'blockquote',
+    (
+      state: StateBlock,
+      startLine: number,
+      endLine: number,
+      silent: boolean
+    ): boolean => {
+      // We gotta call the actual blockquote function first
+      // to check if it is a blockquote or not
+      const result = actualBlockquote(state, startLine, endLine, silent)
+      if (!result) return false // If it is not a blockquote, we should return false
+
+      // Last token expected to be blockquote_close if it is not silent and successful
+      const tokens = state.tokens
+      const lastToken = tokens[tokens.length - 1 /* array length */]
+      // If it was silent or not successful, we should return the result
+      if (lastToken.type !== 'blockquote_close') return result
+
+      // At this point we are sure that it is a blockquote
+      // We should check if it is an alert
+      let i = tokens.length - 1 /* array length */ - 1 /* blockquote_close */
+      for (;; i--) {
+        const token = tokens[i]
+        if (token === null) throw new Error('Opening tag not found for blockquote!')
+        if (token.type === 'blockquote_open') break
+      }
+
+      // As we found opening tag, we should check if it is an alert
+      // Match alert type checks if "inline" token matches the alert syntax
+      const inlineToken = tokens[i + 2]
+      const alertType = matchAlertType(inlineToken)
+      if (alertType === null) return result
+
+      // As we are sure that it is an alert, we should remove the [!INFO] from the content
+      inlineToken.content = inlineToken.content.split('\n').slice(1).join('\n')
+
+      // And we should put identifiers to both opening and closing tags
+      // to check if it is an alert or not when rendering
+      tokens[i].meta = {
+        isAlert: true,
+        alertType
+      }
+      lastToken.meta = {
+        isAlert: true
+      }
+
+      return result
+    },
+    { alt: ['paragraph', 'reference', 'blockquote', 'list'] }
+  )
 }

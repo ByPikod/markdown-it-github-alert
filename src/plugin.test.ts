@@ -1,6 +1,8 @@
 import { describe, it, expect } from '@jest/globals'
 import MarkdownIt from 'markdown-it'
 import { alertPlugin } from './plugin'
+import { renderClosing, renderOpening } from './renderer'
+import { AlertType } from './alert_type'
 
 // This is a test that verifies that our plugin works as expected
 // Can be run with `npm test`
@@ -17,8 +19,9 @@ describe('Test alert syntax', () => {
       '\n> Hello, world'
 
     const actualHtml = md.render(markdownText) // Render the Markdown text to HTML
+    const expected = renderOpening(AlertType.NOTE) + '<p>Hello, world</p>\n' + renderClosing() // <-- This is the expected HTML
 
     // Assert
-    expect(actualHtml).toBe('') // Test that the actual HTML matches the expected HTML
+    expect(actualHtml).toBe(expected) // Test that the actual HTML matches the expected HTML
   })
 })
