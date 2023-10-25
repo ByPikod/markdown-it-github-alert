@@ -1,0 +1,1 @@
+export { alertPlugin } from './plugin'

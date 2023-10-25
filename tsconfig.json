@@ -14,8 +14,8 @@
         "esModuleInterop": true
     },
     "include": [
+        "./test/*.ts",
         "./src/*.ts",
-        "jest.config.ts"
-, "remove/renderer.ts"    ]
+    ]
 }
   
