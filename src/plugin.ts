@@ -4,6 +4,7 @@ import type Token from 'markdown-it/lib/token'
 import { matchAlertType } from './parser'
 import { renderClosing, renderOpening } from './renderer'
 import type StateBlock from 'markdown-it/lib/rules_block/state_block'
+import { type RuleBlock } from 'markdown-it/lib/parser_block'
 
 /**
  * Renders the token opening to HTML.
@@ -64,7 +65,7 @@ export function alertPlugin (md: MarkdownIt): void {
   // Find actual blockquote function
   const actualBlockquote = md.block.ruler
     .getRules('')
-    .find((val) => val.name === 'blockquote')
+    .find((val: RuleBlock) => val.name === 'blockquote')
   if (actualBlockquote === undefined) throw new Error('Blockquote rule not found!')
 
   // Change it with the custom one
