@@ -16,7 +16,7 @@ export function renderOpening (alertType: AlertType): string {
   const alertIcon = alertTypeToIcon(alertType)
 
   return '' +
-    `<div class="markdown-alert markdown-alert-${alertClassName}" dir="auto">
+    `<div class="markdown-alert ${alertClassName}" dir="auto">
       <span>
         <svg class="markdown-alert-icon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
           <path d="${alertIcon}">
