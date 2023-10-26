@@ -63,10 +63,10 @@ export function alertPlugin (md: MarkdownIt): void {
   md.renderer.rules.blockquote_close = renderBlockquoteClose
 
   // Find actual blockquote function
-  const actualBlockquote = md.block.ruler
-    .getRules('')
-    .find((val: RuleBlock) => val.name === 'blockquote')
-  if (actualBlockquote === undefined) throw new Error('Blockquote rule not found!')
+  const ruler = (md.block.ruler as any)
+  const rule = ruler.__rules__.find((rule: any) => rule.name === 'blockquote')
+  const actualBlockquote = rule.fn as RuleBlock
+  if (typeof actualBlockquote !== 'function') throw new Error('Blockquote rule not found!')
 
   // Change it with the custom one
   md.block.ruler.at(
