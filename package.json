@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-github-alert",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "GitHub Markdown Alert Syntax Plugin for Markdown It",
   "main": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
