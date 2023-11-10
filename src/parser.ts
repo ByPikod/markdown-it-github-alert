@@ -12,7 +12,7 @@ export const REGEXP_ALERT = /^\[[!](note|warning|important)\]$/
  */
 export function matchAlertType (token: Token): AlertType | null {
   // Only look for inline tokens
-  if (token.type !== 'inline') return null
+  if (token === undefined || token.type !== 'inline') return null
 
   // Content must be at least 2 lines
   const lines = token.content.split('\n')

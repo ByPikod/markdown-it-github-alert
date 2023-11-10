@@ -8,7 +8,7 @@ import { AlertType } from './alert_type'
 // Can be run with `npm test`
 // or with `npx jest`
 describe('Test alert syntax', () => {
-  it('test it', () => {
+  it('Render test', () => {
     // Arrange
     const md = new MarkdownIt()
     md.use(alertPlugin) // <-- This is our plugin. It adds the alert syntax to MarkdownIt
@@ -23,5 +23,18 @@ describe('Test alert syntax', () => {
 
     // Assert
     expect(actualHtml).toBe(expected) // Test that the actual HTML matches the expected HTML
+  })
+
+  it('Check if there is any error with regular blockquote.', () => {
+    // Arrange
+    const md = new MarkdownIt()
+    md.use(alertPlugin)
+    // any error should be thrown
+    md.render('>')
+    md.render('> ')
+    md.render('> Hello, world')
+    md.render('> [!NOTE]')
+    md.render('> Hello \n [!NOTE]')
+    md.render('> Hello \n [!NOTE] \n > Hello')
   })
 })
