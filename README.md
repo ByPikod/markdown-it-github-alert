@@ -39,22 +39,68 @@ md.use(alertPlugin) // <-- This is the line that adds the plugin to MarkdownIt
 const markdownText = '> [!NOTE]' + '\n> Hello, world'
 const result = md.render(markdownText)
 console.log(result)
+
+// Output would be:
+// <div class="markdown-alert note" dir="auto">
+//    <span>
+//        <svg class="markdown-alert-icon">
+//            ...
+//        </svg>
+//        Note
+//    </span>
+//    <p>Hello, world</p>
+// </div>
 ```
 
-Output:
+### Styling
 
-```html
-<div class=\"markdown-alert markdown-alert-note\" dir=\"auto\">
-    <span>
-        <svg class=\"markdown-alert-icon\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\">
-            <path d=\"M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 
-0 0 1 0 2Z\"></path>
-        </svg>
-        Note
-    </span>
-    <p>Hello, world</p>
-</div>
+You can use the following CSS to style the alert boxes:
+
+```css
+.markdown-alert {
+    padding: 1em;
+    border-left: 0.25rem solid;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    border-color: var(--border-color);
+}
+
+.markdown-alert > span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--border-color);
+}
+
+.markdown-alert .markdown-alert-icon {
+    margin-right: 0.5em;
+    fill: var(--border-color);
+}
+
+.markdown-alert.note {
+    --border-color: #539BF5;
+}
+
+.markdown-alert.warning {
+    --border-color: #C69026;
+}
+
+.markdown-alert.important {
+    --border-color: #986EE2;
+}
+
+.markdown-alert.caution {
+    --border-color: #E5534B;
+}
+
+.markdown-alert.tip {
+    --border-color: #57AB5A;
+}
 ```
+
+### Result
+
+![Preview](preview.png)
 
 ## How is this plugin working?
 
