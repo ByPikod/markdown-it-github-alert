@@ -1,7 +1,7 @@
 import type Token from 'markdown-it/lib/token'
 import { type AlertType, classNameToAlertType } from './alert_type'
 
-export const REGEXP_ALERT = /^\[[!](note|warning|important)\]$/
+export const REGEXP_ALERT = /^\[[!](note|warning|important|caution|tip)\]$/
 
 /**
  * Matches the token to an alert token and returns the alert type.

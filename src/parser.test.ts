@@ -20,5 +20,15 @@ describe('Parser.ts', () => {
     token.content = '[!IMPORTANT]\nHello, world'
     alertType = matchAlertType(token)
     expect(alertType).toBe(AlertType.IMPORTANT)
+
+    // Important alert
+    token.content = '[!CAUTION]\nHello, world'
+    alertType = matchAlertType(token)
+    expect(alertType).toBe(AlertType.CAUTION)
+
+    // Important alert
+    token.content = '[!TIP]\nHello, world'
+    alertType = matchAlertType(token)
+    expect(alertType).toBe(AlertType.TIP)
   })
 })
