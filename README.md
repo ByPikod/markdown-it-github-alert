@@ -7,11 +7,17 @@ I want to admit it was really hard to get this working.  Since there is no docum
 > [!NOTE]
 > GitHub Note Alert Example
 
+> [!TIP]
+> GitHub Tip Alert Example
+
 > [!IMPORTANT]
 > GitHub Important Alert Example
 
 > [!WARNING]
 > GitHub Warning Alert Example
+
+> [!CAUTION]
+> GitHub Caution Alert Example
 
 ## Installation
 
