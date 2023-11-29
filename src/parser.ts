@@ -10,7 +10,7 @@ export const REGEXP_ALERT = /^\[[!](note|warning|important|caution|tip)\]$/
  * @param token Token to check
  * @returns Alert type or null if not an alert token
  */
-export function matchAlertType (token: Token): AlertType | null {
+export function matchAlertType(token: Token): AlertType | null {
   // Only look for inline tokens
   if (token === undefined || token.type !== 'inline') return null
 
@@ -19,7 +19,8 @@ export function matchAlertType (token: Token): AlertType | null {
   if (lines.length <= 1) return null
 
   // First line must start with [!
-  const firstLine = lines[0]
+  let firstLine = lines[0]
+  firstLine = firstLine.trim() // added for issue #3
   if (!firstLine.startsWith('[!')) return null
 
   // Parse the alert type with regex

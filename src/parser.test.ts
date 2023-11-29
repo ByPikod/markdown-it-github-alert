@@ -31,7 +31,17 @@ describe('Parser.ts', () => {
     token.content = '[!TIP]\nHello, world'
     alertType = matchAlertType(token)
     expect(alertType).toBe(AlertType.TIP)
-  });
+  })
+
+  // Token can have whitespaces before or after the alert type
+  // https://github.com/ByPikod/markdown-it-github-alert/issues/3
+  it('Trim test', () => {
+    // Trim test
+    const token = new Token('inline', '', 0)
+    token.content = '   [!TIP] \t \nHello, world'
+    const alertType = matchAlertType(token)
+    expect(alertType).toBe(AlertType.TIP)
+  })
 
   it('Reject bad cases', () => {
     const token = new Token('inline', '', 0)
@@ -56,6 +66,5 @@ describe('Parser.ts', () => {
     token.content = '[!DEFINITION]\nHello, world'
     alertType = matchAlertType(token)
     expect(alertType).toBeNull()
-
-  });
+  })
 })
